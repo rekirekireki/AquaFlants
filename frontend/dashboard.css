@@ -128,7 +128,7 @@ position: fixed;
 z-index: 1;
 top: 0;
 left: 0;
-background-color: rgb(136, 202, 13);
+background-color: rgb(255, 255, 255);
 overflow-x: hidden;
 transition: 0.5s;
 padding-top: 60px;
