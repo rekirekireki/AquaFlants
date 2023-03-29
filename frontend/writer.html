@@ -1,0 +1,48 @@
+<?php
+include_once("connection.php");
+?>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>AquaFlants - Create Account</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="createaccount.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Insert New Plant</h1>
+      <form action="#" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="Type of Plant">Type of Plant:</label>
+          <input type="text" class="form-control" id="typeplant" name="typeplant" placeholder="Enter Type of Plant" required>
+        </div>
+        <div class="form-group">
+          <label for="Name of Plant">Name of Plant:</label>
+          <input type="text" class="form-control" id="nameplant" name="nameplant" placeholder="Enter Name of Plant" required>
+        </div>
+        <div class="form-group">
+          <label for="Soil Preference">Soil Preference:</label>
+          <input type="text" class="form-control" id="soilpref" name="soilpref" placeholder="Enter Soil Preference" required>
+        </div>
+        <div class="form-group">
+          <label for="Sunlight Preference">Sunlight Preference:</label>
+          <input type="text" class="form-control" id="sunpref" name="sunpref" placeholder="Enter Sunlight Preference" required>
+        </div>
+        <div class="form-group">
+          <label for="Water Preference">Water Preference:</label>
+          <input type="text" class="form-control" id="waterpref" name="waterpref" placeholder="Enter Water Preference" required>
+        </div>
+        <div class="form-group">
+            <label for="image">Insert an image:</label>
+            <input type="file" id="image" name="image">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>    
+      </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
