@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' rel='stylesheet' />
+  <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
+  <script src='https://code.jquery.com/ui/1.12.1/jquery-ui.min.js'></script>
+  <script>
+    $(document).ready(function() {
+      // Initialize the calendar
+      var calendar = $('#calendar').fullCalendar({
+        // Set options and callbacks
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,agendaWeek,agendaDay'
+        },
+        editable: true,
+        selectable: true,
+        selectHelper: true,
+        select: function(start, end) {
+          // Show a dialog to enter a note for the selected date
+          var note = prompt('Enter a note for the selected date:');
+          if (note) {
+            // Add an event to the calendar with the note as the title
+            calendar.fullCalendar('renderEvent', {
+              title: note,
+              start: start,
+              end: end
+            }, true);
+            // Flash the events on the selected date
+            calendar.fullCalendar('flashEvents', start);
+          }
+          // Unselect the date range
+          calendar.fullCalendar('unselect');
+        },
+        eventClick: function(calEvent, jsEvent, view) {
+          // Show a dialog to confirm if the user wants to remove the event
+          if (confirm('Are you sure you want to remove the event?')) {
+            // Remove the event from the calendar
+            calendar.fullCalendar('removeEvents', calEvent._id);
+            // Flash the events on the selected date
+            calendar.fullCalendar('flashEvents', calEvent.start);
+          }
+        },
+        droppable: true,
+        drop: function(date, jsEvent, ui, resourceId) {
+          // Get the "watered" and "sunlight" values from the dropped element
+          var value = $(ui.helper).data('value');
+          // Add an event to the calendar with the value as the title
+          calendar.fullCalendar('renderEvent', {
+            title: value,
+            start: date,
+            end: date
+          }, true);
+          // Flash the events on the dropped date
+          calendar.fullCalendar('flashEvents', date);
+        },
+        events: [
+          // You can load events from a JSON feed or add them manually
+          // Example:
+          // {
+          //   title: 'Event 1',
+          //   start: '2023-03-28',
+          //   end: '2023-03-28'
+          // },
+        ]
+      });
+
+      // Make the "watered" and "sunlight" elements draggable
+      $('.draggable').draggable({
+        helper: 'clone',
+        revert: 'invalid'
+      });
+    });
+  </script>
+  <style>
+    body {
+        margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica Neue, sans-serif;
+      background-image: url('background.jpg');
+      background-size: cover;
+    }
+    #calendar {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 0 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+    #external-events {
+    position: fixed;
+    left: 20px;
+    top: 20px;
+    width: 150px;
+    padding: 0 10px;
+    border: 1px solid #ccc;
+    background: #eee;
+    text-align: left;
+  }
+
+  #external-events h4 {
+    font-size: 16px;
+    margin-top: 0;
+    padding-top: 1em;
+  }
+
+  #external-events .fc-event {
+    margin: 3px 0;
+    cursor: move;
+  }
+
+  #external-events p {
+    margin: 1.5em 0;
+    font-size: 11px;
+    color: #666;
+  }
+
+  #external-events p input {
+    margin: 0;
+    vertical-align: middle;
+  }
+
+  #calendar-wrap {
+    margin-left: 200px;
+  }
+
+  </style>
+</head>
+<body>
+    <div id='wrap'>
+
+        <div id='external-events'>
+          <h4>Draggable Events</h4>
+    
+          <div id='external-events-list'>
+            <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
+              <div class='fc-event-main'>Watered</div>
+            </div>
+            <div class='fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event'>
+              <div class='fc-event-main'>Sunlight</div>
+            </div>
+          </div>
+    
+          <p>
+            <input type='checkbox' id='drop-remove' />
+            <label for='drop-remove'>remove after drop</label>
+          </p>
+        </div>
+
+    <div id='calendar-wrap'>
+            <div id='calendar'></div>
+    </div>
+</body>
+</html>
